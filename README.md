@@ -10,15 +10,22 @@
 
 - [Preface](#Preface)
 - [Introduction](#Introduction)
-    * [Maximization & Constraints](#maximization---constraints)
-    * [Maximization & Constraints](#Maximization%20&%20Constraints)
-    * [Maximization & Constraints](####Maximization%20&%20Constraints)
+    * [Maximization & Constraints](#maximization--constraints)
+    * [Solutions in a Feasible Region](#solutions-in-a-feasible-region)
+    * [Binary Choices](#binary-choices)
+- [Methodology](#methodology)
+    * [Greedy Approach](#greedy-approach)
+    * [Brute Force Method](#brute-force-method)
+    * [Backtracking](#backtracking)
+    * [Branch and Bound](#branch-and-bound)
+- [Analysis](#analysis)
+- [Final Thoughts](#final-thoughts)
 
 ## Preface
 
 This project's original intent was to utilize <a href="https://www2.bc.edu/gerard-keough/software.html" target="_blank">LP Assistant</a> and implement a new GUI method to apply user-selected choices in the Branch and Bound (BnB) algorithm for integer optimization. The University of Bilkent has a great resource to learn more, found <a href="https://www.ie.bilkent.edu.tr/~mustafap/courses/bb.pdf" target="_blank">here</a>.
 
-Unfortunately, due to time constraints and difficulty in understanding the source of LP Assistant, I find it impossible to develop my original idea. We all face great challenges in life and it is critical to only take on those that are realistic given certain constraints. Instead I will transition into programmatically working through a famous case applying the BnB algorithm: the Knapsack Problem!
+Unfortunately, due to time constraints and difficulty in understanding the source of LP Assistant, I find it impossible to develop my original idea. We all face great challenges in life and it is critical to only take on those that are realistic given certain constraints. Instead I will transition into programmatically working through a famous case that applies a variation of the BnB algorithm: the Knapsack Problem!
 
 ## Introduction
 
@@ -28,13 +35,14 @@ Let's dive into the knapsack problem:
 You have a backpack with some maximum volume or weight and a unique assortment 
 of items that have varying volumes and levels of associated value. You want to 
 maximize the total value of what you can carry, given that everything has to 
-fit inside the volume constraint. What do you take?
+fit inside the capacity constraint. What do you take?
 ```
 
 Several variations of the problem exist, where items may not be unique and there are duplicates. Others include items that require other items, like how a portable stove requires a butane gas canister. For this project, I will focus on the simplest reduction of the knapsack problem.
 
 We can express this problem succinctly with the following:
 
+<br>
 <p align="center">
 <img src="https://latex.codecogs.com/gif.latex?\textup{Given&space;}n\textup{&space;number&space;of&space;items,&space;each&space;with&space;weight&space;}{w_i}\textup{&space;and&space;}{v_i}\textup{,&space;and&space;a&space;maximum&space;weight&space;}{W}{:}" title="definitions" />
 </p>
@@ -46,7 +54,7 @@ We can express this problem succinctly with the following:
 <p align="center" >
 <img src="https://latex.codecogs.com/gif.latex?\textup{subject&space;to&space;}\sum_{i=1}^{n}{w_ix_i}\leq&space;W\textup{&space;and&space;}{x_i}\in&space;\{0,1\}" title="constraints" />
 </p>
-
+<br>
 
 Right off the bat, several linear programming concepts jump out:
 
@@ -60,7 +68,7 @@ Let's break them down.
 
 The most fundamental part of linear programming is finding a solution (or lack thereof) to a problem. In the case of optimization given there is a solution, we typically wish to maximize or minimize the solution to obtain the best value. For the knapsack problem, we want to _maximize_ the value of all items in the sack. What is the highest value of stuff we can put into the bag? We call this the objective value of a function.
 
-Unfortunately as all good things in life are limited by some factor, we have constraints to consider. We are not able to jam everything into this bag and call it a day. And no we cannot bring another bag with us or increase how much weight we can carry via strength training - that defeats the purpose of this problem. We are bound by the size of the bag and in linear optimization, constraints play a key role in determining the possible viable solutions to a given problem.
+Unfortunately as all good things in life are limited by some factor, we have constraints to consider. We are not able to jam everything into this bag and call it a day. And no we cannot bring another bag with us or increase how much weight we can carry via strength training - that defeats the purpose of this problem. We are bound by the capacity of the bag and in linear optimization, constraints play a key role in determining the possible viable solutions to a given problem.
 
 #### Solutions in a Feasible Region
 
@@ -78,9 +86,9 @@ We consider these yes or no questions to be binary (0,1), a subset of integer (w
 
 In approaching this problem, we need to flesh out not just any solution, but an optimal one. For this section, we will review the several concepts of the thought process behind an optimal approach at generating a solution.
 
-#### Greedy Algorithm
+#### Greedy Approach
 
-Naturally, we wouldd start by putting items with the highest value in the sack irrespective of their sizes. This can often lead to a solution, but more importantly it does not always result in an optimal one. This sorting method is, however, useful in speeding up the process involved in choosing the ideal combination of items to take. We need to think outside the box, yet somehow remain within the box.
+Naturally, we would start by putting items with the highest value in the sack irrespective of their weights. We then might consider a ratio of value to weight being a decent deciding factor. This process can often lead to a solution, but more importantly it does not always result in an optimal one. This sorting method is, however, useful in speeding up the process involved in choosing the ideal combination of items to take. We need to think outside the box, yet somehow remain within the box.
 
 This kind of thought process is necessary when deciding on algorithmic approaches to any problem.
 
@@ -102,12 +110,20 @@ We have finally arrived! The branch and bound method consolidates all of the pre
 
 But wait, how do we actually do this?
 
-As the name suggest, we will be working in the branches (or rather leaf nodes) in a tree data structure. The main idea to get out of this tree data structure is that there are different ways to move around the nodes - we can go down the 
+As the name suggest, we will be working in the branches (or rather leaf nodes) in a tree-like data structure. The main idea to get out of this tree data structure is that there are different ways to move around the nodes - this movement will let us explore the possible combinations.
 
-First, we take a look at the usual suspects, objects with the highest value and process them first. Recall the greedy method - we do not expect a perfect solution just yet, but we are working towards one. Next, we want to implement a way to traverse the feasible region. By utilizing the general construction of a brute force method, we can easily create combinations of items. After this, we apply backtracking to stop at branches that don't have a better objective value.
+Another data structure used is a item queue, being first in, first out. This queue helps us organize these "branches" into meaningful sets of items.
 
+First, we take a look at the usual suspects, objects with the highest value to weight ratio and process them first. Recall the greedy method - we do not expect a perfect solution just yet, but we are working towards one. Next, we want to implement a way to traverse the feasible region. By utilizing the general construction of a brute force method, we can easily create combinations of items. After this, we apply backtracking to stop at branches that don't have a better objective value to reduce the time spent calculating infeasible values. Here comes the trick: bounding.
 
+In linear optimization, we have constraints that bound the entire solution set for a problem. With the knapsack problem, we are able to create such bounds by deciding whether or not to take an item (recall binary choice). If we choose to leave something behind, is the best possible objective value for that decision better or worse than if we took it? If the potential best solution down the line is worse than what we already have, there is no point in continuing further. We can keep track of the current best objective value and flush out decisions that would ultimately lead us to having a worse value.
 
+We can summarize these steps or nodes with the following:
+
+1. If we reach a choice that would be infeasible, we stop!
+2. If we reach a choice that has a worse objective value, we stop!
+3. If we reach a point where we cannot make a choice, we stop!
+4. Otherwise, branch!
 
 ## Analysis
 
