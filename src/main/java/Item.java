@@ -14,7 +14,7 @@ public class Item implements Comparable {
     }
 
     /**
-     * Implemented Compareable method to sort by ratio of value to weight
+     * Implemented Comparable method to sort by ratio of value to weight
      * @param object Item
      * @return int Comparator value
      */
