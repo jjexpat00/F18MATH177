@@ -8,6 +8,12 @@
 
 ###### By Jacob Chow
 
+- [Preface](#Preface)
+- [Introduction](#Introduction)
+    * [Maximization & Constraints](#maximization---constraints)
+    * [Maximization & Constraints](#Maximization%20&%20Constraints)
+    * [Maximization & Constraints](####Maximization%20&%20Constraints)
+
 ## Preface
 
 This project's original intent was to utilize <a href="https://www2.bc.edu/gerard-keough/software.html" target="_blank">LP Assistant</a> and implement a new GUI method to apply user-selected choices in the Branch and Bound (BnB) algorithm for integer optimization. The University of Bilkent has a great resource to learn more, found <a href="https://www.ie.bilkent.edu.tr/~mustafap/courses/bb.pdf" target="_blank">here</a>.
@@ -27,9 +33,9 @@ fit inside the volume constraint. What do you take?
 
 Several variations of the problem exist, where items may not be unique and there are duplicates. Others include items that require other items, like how a portable stove requires a butane gas canister. For this project, I will focus on the simplest reduction of the knapsack problem.
 
-We can express this problem succinctly with the following equations:
+We can express this problem succinctly with the following:
 
-<p>
+<p align="center">
 <img src="https://latex.codecogs.com/gif.latex?\textup{Given&space;}n\textup{&space;number&space;of&space;items,&space;each&space;with&space;weight&space;}{w_i}\textup{&space;and&space;}{v_i}\textup{,&space;and&space;a&space;maximum&space;weight&space;}{W}{:}" title="definitions" />
 </p>
 
