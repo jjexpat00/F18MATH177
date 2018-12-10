@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collections;
+
 
 public class KnapsackTest {
 
@@ -10,6 +10,7 @@ public class KnapsackTest {
 
         //  Initialize a list of items and the respective lists of associated weights and values
         ArrayList<Item> items = new ArrayList<Item>();
+
         double[] weights = {2, 3.14, 1.98, 5, 3};
         int[] values = {40, 50, 100, 95, 30};
 
@@ -19,10 +20,9 @@ public class KnapsackTest {
             items.add(newItem);
         }
 
-        System.out.println(items);
-
-        // Sorting test with implemented Comparable
-        Collections.sort(items);
-        System.out.println(items);
+        System.out.println("Items: " + items);
+        Knapsack k = new Knapsack(items, maxWeight);
+        System.out.println("Max value: " + k.getMaxProfit());
+        System.out.println("Items to take: " + k.getOutput());
     }
 }
