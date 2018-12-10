@@ -127,7 +127,115 @@ We can summarize these steps or nodes with the following:
 
 ## Analysis
 
+In this implementation, I constructed Item, Node, and Knapsack classes. Like their names suggest, they work together to run the knapsack analysis. Unabridged versions of the following code is available within the repo under the /src/ directory.
 
+The Item class constitutes the basic unit in the array containing the items. It acts as a unique object that is more interesting than an ordered pair of Double and Integer types. Implementing the Comparable interface, we are able to use Java Collections to sort the items in the Greedy approach based on a ratio comparison of value to weight. While not necessary, setters and getters are included to modify the contents of each item in addition to the constructor.
+
+```java
+public class Item implements Comparable {
+
+    private double weight;
+    private int value;
+    
+    // Constructor, setters, and getters
+    ...
+    
+    }
+```
+
+In addition to the setters and getters, the node struct is composed to enhance the item object, giving the item queue properties. These enhancements are not available as an extension via inheritance due to class differences. We want this object to have queue properties to monitor the "descent" along a branch within subtrees.
+
+```java
+public class Node {
+
+    private double weight;
+    private int level, profit, bound;
+    
+    // Setters and getters
+    ...
+    
+    }
+
+```
+
+The Knapsack class is a little more to digest, but it can be broken down into three parts: Accessories, Subtree exploration, and the Knapsack algorithm.
+
+Accessories within this class include the standard constructor elements that take in the list of items we want to analyze and the maximum knapsack weight. We sort the list of items with the greedy ratio and find the size of the list.
+
+```java
+public Knapsack(ArrayList<Item> items, double maxWeight) {
+
+        // Sorting with implemented Comparable
+        ArrayList<Item> i = new ArrayList<Item>();
+        for (Item item : items) {
+            i.add(item);
+        }
+        Collections.sort(i);
+        n = items.size();
+        W = maxWeight;
+
+        maxProfit = knapsack(i);
+
+    }
+```
+
+We also have some functions that allow us to access our results. I'll need to revisit the output list of items another time to allow for duplicate entry items.
+
+```java
+public int getMaxProfit() {
+        return maxProfit;
+    }
+    
+public Set<Item> getOutput() {
+        Set<Item> q = new LinkedHashSet<Item>(output);
+        return q;
+    }
+```
+
+Moving into subtree exploration, we have a function that manages the node to check future subtrees that may exist from the current node. 
+
+```java
+public int boundFunc(Node x, double maxWeight, ArrayList<Item> items) {
+
+        // Checks for the maximum value or profit of the current node's valid subtrees
+        ...
+        
+    }
+```
+
+Within the knapsack algorithm we bring it all together.
+
+```java
+public int knapsack(ArrayList<Item> items) {
+    
+    // Initialize a blank node to start the queue
+    
+    // While we still have valid subtrees to explore...
+    while (!Q.isEmpty()) {
+        
+        // Initialize next node's properties
+        // Determine if the current node's subtree has maximum values
+        
+        // If we are no greater than maximum weight and have a better value, try this node hierarchy
+        
+        // If we find another node that further adds value, try this node hierarchy
+        
+        // Moving to the next node, try again, adding the node to the queue
+    }
+    
+    return maxProfit;
+}
+```
+
+So for the example given {weight, value} items:
+
+> {2.0, 40}, {3.14, 50}, {1.98, 100}, {5.0, 95}, {3.0, 30}
+
+We reach optimal value of 235 with items:
+
+> {1.98, 100}, {2.0, 40}, {5.0, 95}
+
+Feel free to run the code with other test cases!
 
 ## Final Thoughts
 

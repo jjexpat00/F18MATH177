@@ -19,7 +19,7 @@ public class Knapsack {
      */
     public Knapsack(ArrayList<Item> items, double maxWeight) {
 
-        // Sorting test with implemented Comparable
+        // Sorting with implemented Comparable
         ArrayList<Item> i = new ArrayList<Item>();
         for (Item item : items) {
             i.add(item);
