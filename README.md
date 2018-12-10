@@ -127,7 +127,8 @@ We can summarize these steps or nodes with the following:
 
 ## Analysis
 
-In this implementation, I constructed Item, Node, and Knapsack classes. Like their names suggest, they work together to run the knapsack analysis. Unabridged versions of the following code is available within the repo under the /src/ directory.
+In this implementation, I constructed Item, Node, and Knapsack classes. Like their names suggest, they work together to run the knapsack analysis. Unabridged versions of the following code is available within the repo under <a href="https://github.com/jjexpat00/F18MATH177/tree/master/src" target="_blank">the /src/ directory</a>.
+
 
 The Item class constitutes the basic unit in the array containing the items. It acts as a unique object that is more interesting than an ordered pair of Double and Integer types. Implementing the Comparable interface, we are able to use Java Collections to sort the items in the Greedy approach based on a ratio comparison of value to weight. While not necessary, setters and getters are included to modify the contents of each item in addition to the constructor.
 
@@ -227,7 +228,7 @@ public int knapsack(ArrayList<Item> items) {
 }
 ```
 
-So for the example given {weight, value} items:
+So for the example given a maximum weight of 10.0 and {weight, value} items:
 
 > {2.0, 40}, {3.14, 50}, {1.98, 100}, {5.0, 95}, {3.0, 30}
 
